@@ -14,7 +14,11 @@ body, .app {
 
 .list-books-title {
   padding: 10px 0;
-  background: #2e7c31;
+  background: #2E7C31;
+  background: #2E7C31;
+  background: -webkit-linear-gradient(left, #2E7C31, #4A4291);
+  background: -moz-linear-gradient(left, #2E7C31, #4A4291);
+  background: linear-gradient(to right, #2E7C31, #4A4291);
   text-align: center;
 }
 
@@ -153,6 +157,10 @@ button:active {
 
 .book-authors {
   color: #999;
+}
+
+.book-authors span {
+  display: block;
 }
 
 .book-top {
