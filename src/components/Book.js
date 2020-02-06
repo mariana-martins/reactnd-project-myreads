@@ -8,9 +8,9 @@ class Book extends Component {
   };
   render() {
     const {
-      authors,
+      authors = [],
       title,
-      imageLinks: { thumbnail },
+      imageLinks: { thumbnail = '' } = {},
       shelf,
     } = this.props.book;
     return (
@@ -39,8 +39,8 @@ class Book extends Component {
           </div>
           <div className="book-title">{title}</div>
           <div className="book-authors">
-            {authors.map(author => (
-              <span>{author}</span>
+            {authors.map((author, index) => (
+              <span key={index}>{author}</span>
             ))}
           </div>
         </div>
