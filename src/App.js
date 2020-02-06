@@ -1,9 +1,7 @@
 import React from 'react';
-// import * as BooksAPI from './BooksAPI'
 import './App.css';
-import Book from './components/Book';
 import Bookshelf from './components/Bookshelf';
-import { getAll } from './BooksAPI';
+import * as BooksAPI from './BooksAPI';
 
 class BooksApp extends React.Component {
   state = {
@@ -26,8 +24,8 @@ class BooksApp extends React.Component {
     },
   ];
 
-  componentDidMount() {
-    getAll().then(books => {
+  loadBooks = () => {
+    BooksAPI.getAll().then(books => {
       const booksByShelf = this.shelves.map(shelf => ({
         name: shelf.name,
         books: books.filter(book => book.shelf === shelf.code),
@@ -38,6 +36,16 @@ class BooksApp extends React.Component {
         booksByShelf,
       }));
     });
+  };
+
+  onChangeShelf = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => {
+      this.loadBooks();
+    });
+  };
+
+  componentDidMount() {
+    this.loadBooks();
   }
 
   render() {
@@ -77,7 +85,11 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 {this.state.booksByShelf.map(entry => (
-                  <Bookshelf title={entry.name} books={entry.books} />
+                  <Bookshelf
+                    title={entry.name}
+                    books={entry.books}
+                    onChangeShelf={this.onChangeShelf}
+                  />
                 ))}
               </div>
             </div>
