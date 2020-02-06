@@ -11,7 +11,7 @@ class Book extends Component {
       authors = [],
       title,
       imageLinks: { thumbnail = '' } = {},
-      shelf,
+      shelf = 'none',
     } = this.props.book;
     return (
       <li>

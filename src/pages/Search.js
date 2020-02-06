@@ -6,42 +6,71 @@ import Book from '../components/Book';
 class Search extends React.Component {
   state = {
     books: [],
+    results: [],
     error: undefined,
   };
+
+  componentDidMount() {
+    BooksAPI.getAll().then(books => {
+      this.setState(prevState => ({
+        ...prevState,
+        books,
+      }));
+    });
+  }
+
+  updateState = (results = [], error = undefined) => {
+    this.setState(prevState => ({
+      ...prevState,
+      results,
+      error,
+    }));
+  };
+
   onSearch = event => {
     event.preventDefault();
     const searchValue = event.target.value;
     if (searchValue === '') {
       // no need to search - just set empty
-      this.setState(prevState => ({
-        ...prevState,
-        books: [],
-        error: undefined,
-      }));
+      this.updateState();
       return;
     }
 
-    BooksAPI.search(searchValue).then(books => {
-      if (books.error) {
-        this.setState(prevState => ({
-          ...prevState,
-          books: [],
-          error: books.error,
-        }));
+    BooksAPI.search(searchValue).then(results => {
+      if (results.error) {
+        this.updateState([], results.error);
       } else {
-        this.setState(prevState => ({
-          ...prevState,
-          books,
-          error: undefined,
-        }));
+        this.updateState(results);
       }
     });
   };
 
+  onChangeShelf = (book, newShelf) => {
+    BooksAPI.update(book, newShelf)
+      .then(() => BooksAPI.getAll())
+      .then(books =>
+        this.setState(prevState => ({
+          ...prevState,
+          books,
+        }))
+      );
+  };
+
+  findShelf = book => {
+    const matchedBooks = this.state.books.filter(elem => book.id === elem.id);
+    if (matchedBooks.length > 0) {
+      return matchedBooks[0].shelf;
+    }
+    return 'none';
+  };
+
   render() {
-    const mappedBooks = this.state.books.map((book, index) => (
-      <Book key={index} book={book} />
-    ));
+    const mappedBooks = this.state.results.map((book, index) => {
+      book.shelf = this.findShelf(book);
+      return (
+        <Book key={index} book={book} onChangeShelf={this.onChangeShelf} />
+      );
+    });
     return (
       <div className="search-books">
         <div className="search-books-bar">
