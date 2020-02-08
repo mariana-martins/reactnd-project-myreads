@@ -55,10 +55,11 @@ class Home extends React.Component {
         </div>
         <div className="list-books-content">
           <div>
-            {this.state.booksByShelf.map(entry => (
+            {this.state.booksByShelf.map((entry, index) => (
               <Bookshelf
                 title={entry.name}
                 books={entry.books}
+                key={index}
                 onChangeShelf={this.onChangeShelf}
               />
             ))}
