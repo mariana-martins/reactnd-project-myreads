@@ -1,96 +1,59 @@
 # MyReads Project
+This project is part of a group of projects to complete the React Nano Degree by Udacity. 
 
-This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+The propose of this project was to exercise the knowledge about React through components, state, props, etc.
+Udacity provided to me a layout already done and I had to create a bookshelf app that allows an user to categorize
+books using some categories.
 
-Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+Another mandatory functionality for the project was a limited search feature. An user could search a pre-determined
+term on that search and books related to that query have to display on the page.
 
 ## How to Run
 
-* install all project dependencies with `npm install`
-* start the development server with `npm start`
+* Check out project
+* Open terminal on project's folder
+* Run `npm install` on Terminal to install all project dependencies
+* Run `npm start` on Terminal to start the development server
 
-## What You're Getting
-```bash
-├── CONTRIBUTING.md
-├── README.md - This file.
-├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
-├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
-├── public
-│   ├── favicon.ico # React Icon, You may change if you wish.
-│   └── index.html # DO NOT MODIFY
-└── src
-    ├── components # Shared components across all pages
-    |   ├── Book.js # Component responsible for displaying a book
-    |   └── Bookshelf.js # Component responsible for displaying a bookshelf.
-    ├── icons # Helpful images for your app. Use at your discretion.
-    │   ├── add.svg
-    │   ├── arrow-back.svg
-    │   └── arrow-drop-down.svg
-    ├── pages # Components related to pages
-    |   ├── Home.js # Home page containing bookshelves
-    |   └── Search.js # Page to search for books
-    ├── App.css # Styles for your app.
-    ├── App.js # This is the root of your app. It contains routes to pages.
-    ├── App.test.js # Used for testing. Provided with Create React App.
-    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
-    ├── index.css # Global styles.
-    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
-```
+## Project Structure
 
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
+This project uses the following folders as its architecture.
 
-## Backend Server
+* public: contains static files
+* src/pages: contains components representing pages on this project.  The following list details each case.
+    * Home.js: Home page containing bookshelves
+    * Search.js: Page to search for books
+* src/components: contains shared components across several pages.  The following list details each case.
+    * Book.js: Component responsible for displaying a book
+    * Bookshelf.js: Component responsible for displaying a bookshelf.
+* src/icons: contains SVG icons used by other components 
+* src: contains other source code files required for this project.  The following list details each case.
+    * App.js: This is the root of your app. It contains routes to pages.
+    * App.css: Styles for your app.
+    * App.test.js: Used for testing. Provided with Create React App.
+    * BooksAPI.js: A JavaScript API for the provided Udacity backend.
+    * index.css: Global styles.
+    * index.js: You should not need to modify this file. It is used for DOM rendering only.
+    
+## Udacity API integration
 
-To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
+The integration is specified on [`BooksAPI.js`](src/BooksAPI.js) file, on src folder.  At this moment, this project uses the following methods.
 
-* [`getAll`](#getall)
-* [`update`](#update)
-* [`search`](#search)
+* `getAll()`
+    * Returns a Promise which resolves to a JSON object containing a collection of book objects.
+    * This collection represents the books currently in the bookshelves in your app.
+* `update(book, shelf)`
+    * Parameter `book`: `<Object>` containing at minimum an `id` attribute
+    * Parameter `shelf`: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
+    * Returns a Promise which resolves to a JSON object containing the response data of the POST request
+* `search(query)`
+    * Parameter `query`: `<String>` containing the query to be executed.
+    * Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
+    * These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
 
-### `getAll`
-
-Method Signature:
-
-```js
-getAll()
-```
-
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
-
-### `update`
-
-Method Signature:
-
-```js
-update(book, shelf)
-```
-
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
-
-### `search`
-
-Method Signature:
-
-```js
-search(query)
-```
-
-* query: `<String>`
-* Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
-
-## Important
+### Important
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
-
-## Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+This repository is a project for Udacity React Nano Degree. Therefore, I don't accept pull requests and it's available online for reviewing process.
